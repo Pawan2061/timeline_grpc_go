@@ -2,14 +2,14 @@ syntax = "proto3";
 
 option go_package = "github.com/pascalallen/grpc-go/helloworld";
 
-package helloworld;
+package timeline;
 
-service HelloWorldService {
-  rpc SayHello(HelloWorldRequest) returns (HelloWorldResponse) {}
+service TimelineService {
+  rpc SayHello(TimelineRequest) returns (TimelineResponse) {}
 }
 
-message HelloWorldRequest {}
+message TimelineRequest {}
 
-message HelloWorldResponse {
+message TimelineResponse {
   string message = 1;
 }

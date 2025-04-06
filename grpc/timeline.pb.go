@@ -21,26 +21,26 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type HelloWorldRequest struct {
+type TimelineRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HelloWorldRequest) Reset() {
-	*x = HelloWorldRequest{}
+func (x *TimelineRequest) Reset() {
+	*x = TimelineRequest{}
 	mi := &file_timeline_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HelloWorldRequest) String() string {
+func (x *TimelineRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HelloWorldRequest) ProtoMessage() {}
+func (*TimelineRequest) ProtoMessage() {}
 
-func (x *HelloWorldRequest) ProtoReflect() protoreflect.Message {
+func (x *TimelineRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_timeline_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -52,32 +52,32 @@ func (x *HelloWorldRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HelloWorldRequest.ProtoReflect.Descriptor instead.
-func (*HelloWorldRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TimelineRequest.ProtoReflect.Descriptor instead.
+func (*TimelineRequest) Descriptor() ([]byte, []int) {
 	return file_timeline_proto_rawDescGZIP(), []int{0}
 }
 
-type HelloWorldResponse struct {
+type TimelineResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HelloWorldResponse) Reset() {
-	*x = HelloWorldResponse{}
+func (x *TimelineResponse) Reset() {
+	*x = TimelineResponse{}
 	mi := &file_timeline_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HelloWorldResponse) String() string {
+func (x *TimelineResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HelloWorldResponse) ProtoMessage() {}
+func (*TimelineResponse) ProtoMessage() {}
 
-func (x *HelloWorldResponse) ProtoReflect() protoreflect.Message {
+func (x *TimelineResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_timeline_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -89,12 +89,12 @@ func (x *HelloWorldResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HelloWorldResponse.ProtoReflect.Descriptor instead.
-func (*HelloWorldResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TimelineResponse.ProtoReflect.Descriptor instead.
+func (*TimelineResponse) Descriptor() ([]byte, []int) {
 	return file_timeline_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *HelloWorldResponse) GetMessage() string {
+func (x *TimelineResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
@@ -105,13 +105,12 @@ var File_timeline_proto protoreflect.FileDescriptor
 
 const file_timeline_proto_rawDesc = "" +
 	"\n" +
-	"\x0etimeline.proto\x12\n" +
-	"helloworld\"\x13\n" +
-	"\x11HelloWorldRequest\".\n" +
-	"\x12HelloWorldResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2`\n" +
-	"\x11HelloWorldService\x12K\n" +
-	"\bSayHello\x12\x1d.helloworld.HelloWorldRequest\x1a\x1e.helloworld.HelloWorldResponse\"\x00B+Z)github.com/pascalallen/grpc-go/helloworldb\x06proto3"
+	"\x0etimeline.proto\x12\btimeline\"\x11\n" +
+	"\x0fTimelineRequest\",\n" +
+	"\x10TimelineResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2V\n" +
+	"\x0fTimelineService\x12C\n" +
+	"\bSayHello\x12\x19.timeline.TimelineRequest\x1a\x1a.timeline.TimelineResponse\"\x00B+Z)github.com/pascalallen/grpc-go/helloworldb\x06proto3"
 
 var (
 	file_timeline_proto_rawDescOnce sync.Once
@@ -127,12 +126,12 @@ func file_timeline_proto_rawDescGZIP() []byte {
 
 var file_timeline_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_timeline_proto_goTypes = []any{
-	(*HelloWorldRequest)(nil),  // 0: helloworld.HelloWorldRequest
-	(*HelloWorldResponse)(nil), // 1: helloworld.HelloWorldResponse
+	(*TimelineRequest)(nil),  // 0: timeline.TimelineRequest
+	(*TimelineResponse)(nil), // 1: timeline.TimelineResponse
 }
 var file_timeline_proto_depIdxs = []int32{
-	0, // 0: helloworld.HelloWorldService.SayHello:input_type -> helloworld.HelloWorldRequest
-	1, // 1: helloworld.HelloWorldService.SayHello:output_type -> helloworld.HelloWorldResponse
+	0, // 0: timeline.TimelineService.SayHello:input_type -> timeline.TimelineRequest
+	1, // 1: timeline.TimelineService.SayHello:output_type -> timeline.TimelineResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

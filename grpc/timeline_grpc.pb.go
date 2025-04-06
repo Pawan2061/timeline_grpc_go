@@ -19,101 +19,101 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	HelloWorldService_SayHello_FullMethodName = "/helloworld.HelloWorldService/SayHello"
+	TimelineService_SayHello_FullMethodName = "/timeline.TimelineService/SayHello"
 )
 
-// HelloWorldServiceClient is the client API for HelloWorldService service.
+// TimelineServiceClient is the client API for TimelineService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type HelloWorldServiceClient interface {
-	SayHello(ctx context.Context, in *HelloWorldRequest, opts ...grpc.CallOption) (*HelloWorldResponse, error)
+type TimelineServiceClient interface {
+	SayHello(ctx context.Context, in *TimelineRequest, opts ...grpc.CallOption) (*TimelineResponse, error)
 }
 
-type helloWorldServiceClient struct {
+type timelineServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewHelloWorldServiceClient(cc grpc.ClientConnInterface) HelloWorldServiceClient {
-	return &helloWorldServiceClient{cc}
+func NewTimelineServiceClient(cc grpc.ClientConnInterface) TimelineServiceClient {
+	return &timelineServiceClient{cc}
 }
 
-func (c *helloWorldServiceClient) SayHello(ctx context.Context, in *HelloWorldRequest, opts ...grpc.CallOption) (*HelloWorldResponse, error) {
+func (c *timelineServiceClient) SayHello(ctx context.Context, in *TimelineRequest, opts ...grpc.CallOption) (*TimelineResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HelloWorldResponse)
-	err := c.cc.Invoke(ctx, HelloWorldService_SayHello_FullMethodName, in, out, cOpts...)
+	out := new(TimelineResponse)
+	err := c.cc.Invoke(ctx, TimelineService_SayHello_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// HelloWorldServiceServer is the server API for HelloWorldService service.
-// All implementations must embed UnimplementedHelloWorldServiceServer
+// TimelineServiceServer is the server API for TimelineService service.
+// All implementations must embed UnimplementedTimelineServiceServer
 // for forward compatibility.
-type HelloWorldServiceServer interface {
-	SayHello(context.Context, *HelloWorldRequest) (*HelloWorldResponse, error)
-	mustEmbedUnimplementedHelloWorldServiceServer()
+type TimelineServiceServer interface {
+	SayHello(context.Context, *TimelineRequest) (*TimelineResponse, error)
+	mustEmbedUnimplementedTimelineServiceServer()
 }
 
-// UnimplementedHelloWorldServiceServer must be embedded to have
+// UnimplementedTimelineServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedHelloWorldServiceServer struct{}
+type UnimplementedTimelineServiceServer struct{}
 
-func (UnimplementedHelloWorldServiceServer) SayHello(context.Context, *HelloWorldRequest) (*HelloWorldResponse, error) {
+func (UnimplementedTimelineServiceServer) SayHello(context.Context, *TimelineRequest) (*TimelineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
 }
-func (UnimplementedHelloWorldServiceServer) mustEmbedUnimplementedHelloWorldServiceServer() {}
-func (UnimplementedHelloWorldServiceServer) testEmbeddedByValue()                           {}
+func (UnimplementedTimelineServiceServer) mustEmbedUnimplementedTimelineServiceServer() {}
+func (UnimplementedTimelineServiceServer) testEmbeddedByValue()                         {}
 
-// UnsafeHelloWorldServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to HelloWorldServiceServer will
+// UnsafeTimelineServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TimelineServiceServer will
 // result in compilation errors.
-type UnsafeHelloWorldServiceServer interface {
-	mustEmbedUnimplementedHelloWorldServiceServer()
+type UnsafeTimelineServiceServer interface {
+	mustEmbedUnimplementedTimelineServiceServer()
 }
 
-func RegisterHelloWorldServiceServer(s grpc.ServiceRegistrar, srv HelloWorldServiceServer) {
-	// If the following call pancis, it indicates UnimplementedHelloWorldServiceServer was
+func RegisterTimelineServiceServer(s grpc.ServiceRegistrar, srv TimelineServiceServer) {
+	// If the following call pancis, it indicates UnimplementedTimelineServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&HelloWorldService_ServiceDesc, srv)
+	s.RegisterService(&TimelineService_ServiceDesc, srv)
 }
 
-func _HelloWorldService_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloWorldRequest)
+func _TimelineService_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TimelineRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HelloWorldServiceServer).SayHello(ctx, in)
+		return srv.(TimelineServiceServer).SayHello(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HelloWorldService_SayHello_FullMethodName,
+		FullMethod: TimelineService_SayHello_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloWorldServiceServer).SayHello(ctx, req.(*HelloWorldRequest))
+		return srv.(TimelineServiceServer).SayHello(ctx, req.(*TimelineRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// HelloWorldService_ServiceDesc is the grpc.ServiceDesc for HelloWorldService service.
+// TimelineService_ServiceDesc is the grpc.ServiceDesc for TimelineService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var HelloWorldService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "helloworld.HelloWorldService",
-	HandlerType: (*HelloWorldServiceServer)(nil),
+var TimelineService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "timeline.TimelineService",
+	HandlerType: (*TimelineServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "SayHello",
-			Handler:    _HelloWorldService_SayHello_Handler,
+			Handler:    _TimelineService_SayHello_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
