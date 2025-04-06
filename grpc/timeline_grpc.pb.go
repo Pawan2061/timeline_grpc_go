@@ -4,7 +4,7 @@
 // - protoc             v5.29.3
 // source: timeline.proto
 
-package helloworld
+package grpc
 
 import (
 	context "context"
@@ -19,101 +19,101 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TimelineService_SayHello_FullMethodName = "/timeline.TimelineService/SayHello"
+	PostService_ListPostsByUser_FullMethodName = "/postpb.PostService/ListPostsByUser"
 )
 
-// TimelineServiceClient is the client API for TimelineService service.
+// PostServiceClient is the client API for PostService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TimelineServiceClient interface {
-	SayHello(ctx context.Context, in *TimelineRequest, opts ...grpc.CallOption) (*TimelineResponse, error)
+type PostServiceClient interface {
+	ListPostsByUser(ctx context.Context, in *ListPostsRequest, opts ...grpc.CallOption) (*ListPostsResponse, error)
 }
 
-type timelineServiceClient struct {
+type postServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTimelineServiceClient(cc grpc.ClientConnInterface) TimelineServiceClient {
-	return &timelineServiceClient{cc}
+func NewPostServiceClient(cc grpc.ClientConnInterface) PostServiceClient {
+	return &postServiceClient{cc}
 }
 
-func (c *timelineServiceClient) SayHello(ctx context.Context, in *TimelineRequest, opts ...grpc.CallOption) (*TimelineResponse, error) {
+func (c *postServiceClient) ListPostsByUser(ctx context.Context, in *ListPostsRequest, opts ...grpc.CallOption) (*ListPostsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TimelineResponse)
-	err := c.cc.Invoke(ctx, TimelineService_SayHello_FullMethodName, in, out, cOpts...)
+	out := new(ListPostsResponse)
+	err := c.cc.Invoke(ctx, PostService_ListPostsByUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TimelineServiceServer is the server API for TimelineService service.
-// All implementations must embed UnimplementedTimelineServiceServer
+// PostServiceServer is the server API for PostService service.
+// All implementations must embed UnimplementedPostServiceServer
 // for forward compatibility.
-type TimelineServiceServer interface {
-	SayHello(context.Context, *TimelineRequest) (*TimelineResponse, error)
-	mustEmbedUnimplementedTimelineServiceServer()
+type PostServiceServer interface {
+	ListPostsByUser(context.Context, *ListPostsRequest) (*ListPostsResponse, error)
+	mustEmbedUnimplementedPostServiceServer()
 }
 
-// UnimplementedTimelineServiceServer must be embedded to have
+// UnimplementedPostServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedTimelineServiceServer struct{}
+type UnimplementedPostServiceServer struct{}
 
-func (UnimplementedTimelineServiceServer) SayHello(context.Context, *TimelineRequest) (*TimelineResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
+func (UnimplementedPostServiceServer) ListPostsByUser(context.Context, *ListPostsRequest) (*ListPostsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPostsByUser not implemented")
 }
-func (UnimplementedTimelineServiceServer) mustEmbedUnimplementedTimelineServiceServer() {}
-func (UnimplementedTimelineServiceServer) testEmbeddedByValue()                         {}
+func (UnimplementedPostServiceServer) mustEmbedUnimplementedPostServiceServer() {}
+func (UnimplementedPostServiceServer) testEmbeddedByValue()                     {}
 
-// UnsafeTimelineServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TimelineServiceServer will
+// UnsafePostServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PostServiceServer will
 // result in compilation errors.
-type UnsafeTimelineServiceServer interface {
-	mustEmbedUnimplementedTimelineServiceServer()
+type UnsafePostServiceServer interface {
+	mustEmbedUnimplementedPostServiceServer()
 }
 
-func RegisterTimelineServiceServer(s grpc.ServiceRegistrar, srv TimelineServiceServer) {
-	// If the following call pancis, it indicates UnimplementedTimelineServiceServer was
+func RegisterPostServiceServer(s grpc.ServiceRegistrar, srv PostServiceServer) {
+	// If the following call pancis, it indicates UnimplementedPostServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&TimelineService_ServiceDesc, srv)
+	s.RegisterService(&PostService_ServiceDesc, srv)
 }
 
-func _TimelineService_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TimelineRequest)
+func _PostService_ListPostsByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPostsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimelineServiceServer).SayHello(ctx, in)
+		return srv.(PostServiceServer).ListPostsByUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimelineService_SayHello_FullMethodName,
+		FullMethod: PostService_ListPostsByUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimelineServiceServer).SayHello(ctx, req.(*TimelineRequest))
+		return srv.(PostServiceServer).ListPostsByUser(ctx, req.(*ListPostsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// TimelineService_ServiceDesc is the grpc.ServiceDesc for TimelineService service.
+// PostService_ServiceDesc is the grpc.ServiceDesc for PostService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var TimelineService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "timeline.TimelineService",
-	HandlerType: (*TimelineServiceServer)(nil),
+var PostService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "postpb.PostService",
+	HandlerType: (*PostServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SayHello",
-			Handler:    _TimelineService_SayHello_Handler,
+			MethodName: "ListPostsByUser",
+			Handler:    _PostService_ListPostsByUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

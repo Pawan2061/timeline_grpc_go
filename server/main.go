@@ -13,11 +13,44 @@ import (
 )
 
 type server struct {
-	pb.UnimplementedTimelineServiceServer
+	pb.UnimplementedPostServiceServer
 }
 
-func (s *server) SayHello(ctx context.Context, in *pb.TimelineRequest) (*pb.TimelineResponse, error) {
-	return &pb.TimelineResponse{Message: "Hello, World! "}, nil
+func (s *server) SayHello(ctx context.Context, in *pb.ListPostsRequest) (*pb.ListPostsResponse, error) {
+	return &pb.ListPostsResponse{
+		Posts: []*pb.Post{
+			{
+				Id:        "1",
+				Content:   "Hello from gRPC!",
+				Author:    "UserA",
+				Timestamp: "2025-04-06T23:59:00Z",
+			},
+			{
+				Id:        "2",
+				Content:   "Hello from gRPC!",
+				Author:    "UserA",
+				Timestamp: "2025-04-06T23:59:00Z",
+			},
+			{
+				Id:        "3",
+				Content:   "Hello from gRPC!",
+				Author:    "UserA",
+				Timestamp: "2025-04-06T23:59:00Z",
+			},
+			{
+				Id:        "4",
+				Content:   "Hello from gRPC!",
+				Author:    "UserA",
+				Timestamp: "2025-04-06T23:59:00Z",
+			},
+			{
+				Id:        "5",
+				Content:   "Hello from gRPC!",
+				Author:    "UserA",
+				Timestamp: "2025-04-06T23:59:00Z",
+			},
+		},
+	}, nil
 }
 
 func main() {
@@ -27,7 +60,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	pb.RegisterTimelineServiceServer(s, &server{})
+	pb.RegisterPostServiceServer(s, &server{})
 	log.Printf("gRPC server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

@@ -4,7 +4,7 @@
 // 	protoc        v5.29.3
 // source: timeline.proto
 
-package helloworld
+package grpc
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -21,26 +21,27 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type TimelineRequest struct {
+type ListPostsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TimelineRequest) Reset() {
-	*x = TimelineRequest{}
+func (x *ListPostsRequest) Reset() {
+	*x = ListPostsRequest{}
 	mi := &file_timeline_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TimelineRequest) String() string {
+func (x *ListPostsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TimelineRequest) ProtoMessage() {}
+func (*ListPostsRequest) ProtoMessage() {}
 
-func (x *TimelineRequest) ProtoReflect() protoreflect.Message {
+func (x *ListPostsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_timeline_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -52,32 +53,42 @@ func (x *TimelineRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TimelineRequest.ProtoReflect.Descriptor instead.
-func (*TimelineRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListPostsRequest.ProtoReflect.Descriptor instead.
+func (*ListPostsRequest) Descriptor() ([]byte, []int) {
 	return file_timeline_proto_rawDescGZIP(), []int{0}
 }
 
-type TimelineResponse struct {
+func (x *ListPostsRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type Post struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
+	Author        string                 `protobuf:"bytes,3,opt,name=author,proto3" json:"author,omitempty"`
+	Timestamp     string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TimelineResponse) Reset() {
-	*x = TimelineResponse{}
+func (x *Post) Reset() {
+	*x = Post{}
 	mi := &file_timeline_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TimelineResponse) String() string {
+func (x *Post) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TimelineResponse) ProtoMessage() {}
+func (*Post) ProtoMessage() {}
 
-func (x *TimelineResponse) ProtoReflect() protoreflect.Message {
+func (x *Post) ProtoReflect() protoreflect.Message {
 	mi := &file_timeline_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -89,28 +100,99 @@ func (x *TimelineResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TimelineResponse.ProtoReflect.Descriptor instead.
-func (*TimelineResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use Post.ProtoReflect.Descriptor instead.
+func (*Post) Descriptor() ([]byte, []int) {
 	return file_timeline_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *TimelineResponse) GetMessage() string {
+func (x *Post) GetId() string {
 	if x != nil {
-		return x.Message
+		return x.Id
 	}
 	return ""
+}
+
+func (x *Post) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *Post) GetAuthor() string {
+	if x != nil {
+		return x.Author
+	}
+	return ""
+}
+
+func (x *Post) GetTimestamp() string {
+	if x != nil {
+		return x.Timestamp
+	}
+	return ""
+}
+
+type ListPostsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Posts         []*Post                `protobuf:"bytes,1,rep,name=posts,proto3" json:"posts,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}	
+
+func (x *ListPostsResponse) Reset() {
+	*x = ListPostsResponse{}
+	mi := &file_timeline_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPostsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPostsResponse) ProtoMessage() {}
+
+func (x *ListPostsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_timeline_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPostsResponse.ProtoReflect.Descriptor instead.
+func (*ListPostsResponse) Descriptor() ([]byte, []int) {
+	return file_timeline_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ListPostsResponse) GetPosts() []*Post {
+	if x != nil {
+		return x.Posts
+	}
+	return nil
 }
 
 var File_timeline_proto protoreflect.FileDescriptor
 
 const file_timeline_proto_rawDesc = "" +
 	"\n" +
-	"\x0etimeline.proto\x12\btimeline\"\x11\n" +
-	"\x0fTimelineRequest\",\n" +
-	"\x10TimelineResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2V\n" +
-	"\x0fTimelineService\x12C\n" +
-	"\bSayHello\x12\x19.timeline.TimelineRequest\x1a\x1a.timeline.TimelineResponse\"\x00B+Z)github.com/pascalallen/grpc-go/helloworldb\x06proto3"
+	"\x0etimeline.proto\x12\x06postpb\"+\n" +
+	"\x10ListPostsRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"f\n" +
+	"\x04Post\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
+	"\acontent\x18\x02 \x01(\tR\acontent\x12\x16\n" +
+	"\x06author\x18\x03 \x01(\tR\x06author\x12\x1c\n" +
+	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\"7\n" +
+	"\x11ListPostsResponse\x12\"\n" +
+	"\x05posts\x18\x01 \x03(\v2\f.postpb.PostR\x05posts2U\n" +
+	"\vPostService\x12F\n" +
+	"\x0fListPostsByUser\x12\x18.postpb.ListPostsRequest\x1a\x19.postpb.ListPostsResponseB\tZ\a./;grpcb\x06proto3"
 
 var (
 	file_timeline_proto_rawDescOnce sync.Once
@@ -124,19 +206,21 @@ func file_timeline_proto_rawDescGZIP() []byte {
 	return file_timeline_proto_rawDescData
 }
 
-var file_timeline_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_timeline_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_timeline_proto_goTypes = []any{
-	(*TimelineRequest)(nil),  // 0: timeline.TimelineRequest
-	(*TimelineResponse)(nil), // 1: timeline.TimelineResponse
+	(*ListPostsRequest)(nil),  // 0: postpb.ListPostsRequest
+	(*Post)(nil),              // 1: postpb.Post
+	(*ListPostsResponse)(nil), // 2: postpb.ListPostsResponse
 }
 var file_timeline_proto_depIdxs = []int32{
-	0, // 0: timeline.TimelineService.SayHello:input_type -> timeline.TimelineRequest
-	1, // 1: timeline.TimelineService.SayHello:output_type -> timeline.TimelineResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: postpb.ListPostsResponse.posts:type_name -> postpb.Post
+	0, // 1: postpb.PostService.ListPostsByUser:input_type -> postpb.ListPostsRequest
+	2, // 2: postpb.PostService.ListPostsByUser:output_type -> postpb.ListPostsResponse
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_timeline_proto_init() }
@@ -150,7 +234,7 @@ func file_timeline_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_timeline_proto_rawDesc), len(file_timeline_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

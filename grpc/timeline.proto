@@ -1,15 +1,24 @@
 syntax = "proto3";
 
-option go_package = "github.com/pascalallen/grpc-go/helloworld";
+option go_package = "./;grpc";
 
-package timeline;
+package postpb;
 
-service TimelineService {
-  rpc SayHello(TimelineRequest) returns (TimelineResponse) {}
+service PostService {
+  rpc ListPostsByUser (ListPostsRequest) returns (ListPostsResponse);
 }
 
-message TimelineRequest {}
+message ListPostsRequest {
+  string user_id = 1;
+}
 
-message TimelineResponse {
-  string message = 1;
+message Post {
+  string id = 1;
+  string content = 2;
+  string author = 3;
+  string timestamp = 4;
+}
+
+message ListPostsResponse {
+  repeated Post posts = 1;
 }
