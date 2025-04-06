@@ -5,6 +5,8 @@ import (
 	"log"
 	"net"
 
+	_ "github.com/99designs/gqlgen/graphql"
+
 	pb "github.com/Pawan2061/timeline_grpc_go/grpc"
 
 	"google.golang.org/grpc"
