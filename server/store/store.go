@@ -58,7 +58,7 @@ func (s *Store) initializeMockData() {
 	now := time.Now()
 	for _, user := range users {
 		posts := make([]*Post, 0)
-		for i := 0; i < 5; i++ {
+		for i := 0; i < 20; i++ {
 			post := &Post{
 				ID:        user.ID + "-post-" + string(rune('a'+i)),
 				Content:   "Post " + string(rune('a'+i)) + " from " + user.Username,
