@@ -1,68 +1,42 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net"
+	"net/http"
 
-	_ "github.com/99designs/gqlgen/graphql"
-
-	pb "github.com/Pawan2061/timeline_grpc_go/grpc"
-
-	"google.golang.org/grpc"
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/Pawan2061/timeline_grpc_go/grpc"
+	"github.com/Pawan2061/timeline_grpc_go/server/graph"
+	"github.com/Pawan2061/timeline_grpc_go/server/graph/generated"
+	"github.com/Pawan2061/timeline_grpc_go/server/store"
+	grpcserver "google.golang.org/grpc"
 )
 
-type server struct {
-	pb.UnimplementedPostServiceServer
-}
-
-func (s *server) SayHello(ctx context.Context, in *pb.ListPostsRequest) (*pb.ListPostsResponse, error) {
-	return &pb.ListPostsResponse{
-		Posts: []*pb.Post{
-			{
-				Id:        "1",
-				Content:   "Hello from gRPC!",
-				Author:    "UserA",
-				Timestamp: "2025-04-06T23:59:00Z",
-			},
-			{
-				Id:        "2",
-				Content:   "Hello from gRPC!",
-				Author:    "UserA",
-				Timestamp: "2025-04-06T23:59:00Z",
-			},
-			{
-				Id:        "3",
-				Content:   "Hello from gRPC!",
-				Author:    "UserA",
-				Timestamp: "2025-04-06T23:59:00Z",
-			},
-			{
-				Id:        "4",
-				Content:   "Hello from gRPC!",
-				Author:    "UserA",
-				Timestamp: "2025-04-06T23:59:00Z",
-			},
-			{
-				Id:        "5",
-				Content:   "Hello from gRPC!",
-				Author:    "UserA",
-				Timestamp: "2025-04-06T23:59:00Z",
-			},
-		},
-	}, nil
-}
-
 func main() {
-	lis, err := net.Listen("tcp", ":50051")
-	if err != nil {
-		log.Fatalf("failed to listen on port 50051: %v", err)
-	}
+	store := store.NewStore()
 
-	s := grpc.NewServer()
-	pb.RegisterPostServiceServer(s, &server{})
-	log.Printf("gRPC server listening at %v", lis.Addr())
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
+	go func() {
+		lis, err := net.Listen("tcp", ":50051")
+		if err != nil {
+			log.Fatalf("failed to listen on port 50051: %v", err)
+		}
+
+		s := grpcserver.NewServer()
+		grpc.RegisterPostServiceServer(s, &grpc.PostService{Store: store})
+		log.Printf("gRPC server listening at %v", lis.Addr())
+		if err := s.Serve(lis); err != nil {
+			log.Fatalf("failed to serve: %v", err)
+		}
+	}()
+
+	resolver := graph.NewResolver(store)
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: resolver}))
+
+	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	http.Handle("/query", srv)
+
+	log.Printf("GraphQL server listening at http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
