@@ -74,6 +74,18 @@ This will start the service with:
    }
    ```
 
+You can take this as an example and change the userId as per your choice
+```
+   query {
+     getTimeline(userId: "1") {
+       id
+       content
+       author
+       timestamp
+     }
+   }
+```
+
    - Variables:
 
    ```json
@@ -82,7 +94,7 @@ This will start the service with:
    }
    ```
 
-2. gRPC:
+1. gRPC:
    - Use a gRPC client to connect to `localhost:50051`
 
 ## Mock Data
