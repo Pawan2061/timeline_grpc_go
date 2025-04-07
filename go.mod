@@ -1,6 +1,8 @@
 module github.com/Pawan2061/timeline_grpc_go
 
-go 1.23.2
+go 1.23.0
+
+toolchain go1.23.2
 
 require (
 	github.com/99designs/gqlgen v0.17.70
